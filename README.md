@@ -112,23 +112,6 @@ export default function MiComponente() {
 }
 ```
 
-## 📦 Scripts Disponibles
-
-- `npm run dev` - Inicia el servidor de desarrollo
-- `npm run build` - Construye la aplicación para producción
-- `npm run start` - Inicia la aplicación en modo producción
-- `npm run lint` - Ejecuta el linter
-
-## 🚀 Despliegue
-
-Esta plantilla está lista para ser desplegada en Vercel:
-
-1. Sube tu repositorio a GitHub
-2. Ve a [Vercel](https://vercel.com)
-3. Importa tu repositorio
-4. Configura las variables de entorno
-5. ¡Despliega!
-
 ## ⚠️ Consideraciones de Seguridad
 
 1. Nunca expongas tus credenciales de Firebase
@@ -144,11 +127,3 @@ Esta plantilla está lista para ser desplegada en Vercel:
 3. Añade más campos al registro si es necesario
 4. Personaliza los mensajes de error
 5. Ajusta las reglas de validación en `AuthForm.tsx`
-
-## 🤝 Contribuciones
-
-Las contribuciones son bienvenidas. Por favor, abre un issue primero para discutir los cambios que te gustaría hacer.
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE.md](LICENSE.md) para más detalles.
