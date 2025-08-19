@@ -1,103 +1,161 @@
-import Image from "next/image";
+'use client'
+import Link from 'next/link'
+import { useAuth } from '@/lib/auth'
 
-export default function Home() {
+export default function HomePage() {
+  const { user, loading } = useAuth()
+
+  if (loading) {
+    return (
+      <div style={styles.container}>
+        <div style={styles.spinner}></div>
+        <p>Cargando...</p>
+      </div>
+    )
+  }
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div style={styles.container}>
+      <div style={styles.content}>
+        <h1 style={styles.title}>🔐 Firebase Auth Template</h1>
+        <p style={styles.subtitle}>Sistema de autenticación seguro</p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        {user ? (
+          <div style={styles.userSection}>
+            <div style={styles.userInfo}>
+              <h2>¡Bienvenido!</h2>
+              <p><strong>Email:</strong> {user.email}</p>
+              <p><strong>UID:</strong> {user.uid}</p>
+              <p><strong>Verificado:</strong> {user.emailVerified ? '✅' : '❌'}</p>
+            </div>
+
+            <div style={styles.buttonGroup}>
+              <Link href="/auth/profile" style={styles.button}>
+                Ver Perfil
+              </Link>
+              <button
+                onClick={() => window.location.href = '/auth/logout'}
+                style={{ ...styles.button, backgroundColor: '#dc3545' }}
+              >
+                Cerrar Sesión
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div style={styles.guestSection}>
+            <p style={styles.description}>
+              Inicia sesión o regístrate para acceder a las funciones protegidas
+            </p>
+
+            <div style={styles.buttonGroup}>
+              <Link href="/auth/login" style={styles.button}>
+                Iniciar Sesión
+              </Link>
+              <Link href="/auth/register" style={{ ...styles.button, backgroundColor: '#28a745' }}>
+                Registrarse
+              </Link>
+            </div>
+          </div>
+        )}
+
+        <div style={styles.features}>
+          <h3>✨ Características incluidas:</h3>
+          <ul style={styles.featureList}>
+            <li>🔒 Autenticación con Firebase</li>
+            <li>🛡️ Rutas protegidas</li>
+            <li>📧 Recuperación de contraseña</li>
+            <li>⚡ TypeScript + Next.js 13+</li>
+            <li>🎨 Diseño responsive simple</li>
+            <li>🚀 Listo para producción</li>
+          </ul>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
     </div>
-  );
+  )
+}
+
+const styles = {
+  container: {
+    minHeight: '100vh',
+    backgroundColor: '#f8f9fa',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '1rem'
+  },
+  content: {
+    backgroundColor: 'white',
+    borderRadius: '12px',
+    padding: '2rem',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+    maxWidth: '600px',
+    width: '100%',
+    textAlign: 'center' as const
+  },
+  title: {
+    fontSize: '2.5rem',
+    marginBottom: '0.5rem',
+    color: '#333'
+  },
+  subtitle: {
+    fontSize: '1.2rem',
+    color: '#666',
+    marginBottom: '2rem'
+  },
+  userSection: {
+    marginBottom: '2rem'
+  },
+  userInfo: {
+    backgroundColor: '#e7f3ff',
+    padding: '1.5rem',
+    borderRadius: '8px',
+    marginBottom: '1.5rem',
+    textAlign: 'left' as const
+  },
+  guestSection: {
+    marginBottom: '2rem'
+  },
+  description: {
+    fontSize: '1.1rem',
+    color: '#555',
+    marginBottom: '1.5rem'
+  },
+  buttonGroup: {
+    display: 'flex',
+    gap: '1rem',
+    justifyContent: 'center',
+    flexWrap: 'wrap' as const
+  },
+  button: {
+    display: 'inline-block',
+    padding: '0.75rem 1.5rem',
+    backgroundColor: '#007bff',
+    color: 'white',
+    borderRadius: '6px',
+    textDecoration: 'none',
+    fontWeight: 'bold',
+    border: 'none',
+    cursor: 'pointer',
+    fontSize: '1rem'
+  },
+  features: {
+    marginTop: '2rem',
+    padding: '1.5rem',
+    backgroundColor: '#f8f9fa',
+    borderRadius: '8px',
+    textAlign: 'left' as const
+  },
+  featureList: {
+    listStyle: 'none',
+    marginTop: '1rem'
+  },
+  spinner: {
+    width: '40px',
+    height: '40px',
+    border: '4px solid #f3f3f3',
+    borderTop: '4px solid #007bff',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
+    marginBottom: '1rem'
+  }
 }
